@@ -764,6 +764,7 @@ function assemble_inline_todo!(ir::IRCode, linetable::Vector{LineInfoNode}, sv::
                 # our types. They can be more precise (e.g. f(Bool, A...) would be lowered as
                 # _apply(f, tuple(Bool)::Tuple{DataType}, A), which might not be precise enough to
                 # get a good method match. This pattern is used in the array code a bunch.
+                # TODO utilize memoized varargs type info here if it is available
                 if isa(def, SSAValue) && is_tuple_call(ir, ir[def])
                     for tuparg in ir[def].args[2:end]
                         push!(new_atypes, exprtype(tuparg, ir, ir.mod))
